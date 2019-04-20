@@ -26,9 +26,9 @@ class PackRle {
         }
 
         val out = when {
-            output.isEmpty() && u -> "${input}u.txt"
-            output.isEmpty() && z -> "${input}z.txt"
-            else -> "$output.txt"
+            output.isEmpty() && u -> "$input.u"
+            output.isEmpty() && z -> "$input.z"
+            else -> output
         }
 
         if (z) {
