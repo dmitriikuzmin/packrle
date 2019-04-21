@@ -1,8 +1,10 @@
-import org.junit.Test
-import org.junit.Assert.*
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import java.io.File
+import java.lang.IllegalArgumentException
 
 class PackTest {
+    // позаимствовал функцию из KotlinAsFirst2018/test/lesson7/task1/Tests.kt
     private fun assertFileContent(name: String, expectedContent: String) {
         val file = File(name)
         val content = file.readLines().joinToString("\n")
@@ -24,12 +26,33 @@ class PackTest {
     }
 
     @Test
+    fun invalidArgs() {
+        /**
+         Тут должны были быть тесты на случаи введения 2 аргументов [-z/-u] и невведения не одного, но возник вопрос.
+         Если пользоваться встроенной в args4j опцией для аргументов forbids, то можно сразу отсечь случай введения 2
+         аргументов. Однако опцией на введение хотя бы одного вроде бы нету, что заставляет вводить допольнительную
+         проверку вида:
+
+         if (!u && !z) {
+         throw  SomeException()
+         }
+
+         Но тогда встает вопрос: Что будет лучше по производительности и наглядности для пользователя - forbids, который
+         не кидает никакого Exception и к которому все равно нужно дополнение вида !u && !z, или же простая проверка
+         на u != z ?
+         */
+        assertThrows(IllegalArgumentException::class.java) {main(arrayOf("input/packthis.txt"))}
+        main(arrayOf("-z","-u", "input/packthis.txt"))
+        main(arrayOf())
+    }
+
+    @Test
     fun app() {
         main(arrayOf("-z","input/packthis.txt"))
-        assertFileContent("input/packthis.txt.z","hh6ww9ww2jj5pij")
-        main(arrayOf("-u","input/packthis.txt.z"))
-        assertFileContent("input/packthis.txt.z.u","hhhhhhwwwwwwwwwwwjjjjjpij")
-        File("input/packthis.txt.z").delete()
-        File("input/packthis.txt.z.u").delete()
+        assertFileContent("input/packthisz.txt","hh6ww9ww2jj5pij")
+        main(arrayOf("-u","input/packthisz.txt"))
+        assertFileContent("input/packthiszu.txt","hhhhhhwwwwwwwwwwwjjjjjpij")
+        File("input/packthisz.txt").delete()
+        File("input/packthiszu.txt").delete()
     }
 }

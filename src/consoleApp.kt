@@ -1,10 +1,11 @@
 import org.kohsuke.args4j.*
+import java.lang.IllegalArgumentException
 
 class PackRle {
-    @Option(name = "-z", usage = "Choose packing or unpacking")
+    @Option( name = "-z", usage = "Choose packing or unpacking", forbids = ["-u"])
     var z: Boolean = false
 
-    @Option(name = "-u", usage = "Choose packing or unpacking")
+    @Option(name = "-u", usage = "Choose packing or unpacking", forbids = ["-z"])
     var u: Boolean = false
 
     @Option(name = "-out", usage = "Output file name")
@@ -25,9 +26,13 @@ class PackRle {
             return
         }
 
+        if (!u && !z) {
+            throw  IllegalArgumentException() // CmdLineException не кидается
+        }
+
         val out = when {
-            output.isEmpty() && u -> "$input.u"
-            output.isEmpty() && z -> "$input.z"
+            output.isEmpty() && u -> StringBuilder(input).insert(input.indexOf("."),"u").toString()
+            output.isEmpty() && z -> StringBuilder(input).insert(input.indexOf("."),"z").toString()
             else -> output
         }
 

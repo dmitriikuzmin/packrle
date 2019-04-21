@@ -9,7 +9,7 @@ class Packager {
 
         while (i != str.length) {
             var count = 1
-            while (i != str.length - 1 && str[i] == str[i + 1] && count !=9) {
+            while (i != str.length - 1 && str[i] == str[i + 1] && count != 9) {
                 count++
                 i++
             }
