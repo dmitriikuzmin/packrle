@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.io.File
-import java.lang.IllegalArgumentException
 
 class PackTest {
     // позаимствовал функцию из KotlinAsFirst2018/test/lesson7/task1/Tests.kt
