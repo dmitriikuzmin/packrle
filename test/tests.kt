@@ -40,16 +40,16 @@ class PackTest {
          не кидает никакого Exception и к которому все равно нужно дополнение вида !u && !z, или же простая проверка
          на u != z ?
          */
-        assertThrows(IllegalArgumentException::class.java) {main(arrayOf("input/packthis.txt"))}
-        main(arrayOf("-z","-u", "input/packthis.txt"))
-        main(arrayOf())
+        assertThrows(IllegalArgumentException::class.java) {main("input/packthis.txt")}
+        assertThrows(IllegalArgumentException::class.java) {main("")}
+        main("-z -u input/packthis.txt")
     }
 
     @Test
     fun app() {
-        main(arrayOf("-z","input/packthis.txt"))
+        main("-z input/packthis.txt")
         assertFileContent("input/packthisz.txt","hh6ww9ww2jj5pij")
-        main(arrayOf("-u","input/packthisz.txt"))
+        main("-u input/packthisz.txt")
         assertFileContent("input/packthiszu.txt","hhhhhhwwwwwwwwwwwjjjjjpij")
         File("input/packthisz.txt").delete()
         File("input/packthiszu.txt").delete()

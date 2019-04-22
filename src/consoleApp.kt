@@ -45,8 +45,8 @@ class PackRle {
 }
 
 
-fun main(args: Array<String>) {
-    PackRle().launch(args)
+fun main(args: String) {
+    PackRle().launch(args.split(" ").toTypedArray())
 }
 
 
